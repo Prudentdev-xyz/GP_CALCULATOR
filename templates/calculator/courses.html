@@ -1,0 +1,147 @@
+{% extends 'base.html' %} {% block content %}
+<div class="auth-container">
+  <div class="auth-card" style="max-width: 800px">
+    <h2 class="auth-title">Enter Courses</h2>
+    <p class="auth-subtitle">{{ semester_name }} — {{ academic_year }}</p>
+
+    {% if messages %} {% for message in messages %}
+    <div class="alert alert-error">{{ message }}</div>
+    {% endfor %} {% endif %}
+
+    <div
+      style="
+        margin-bottom: 1rem;
+        padding: 0.75rem 1rem;
+        background: #111;
+        border: 1px solid #222;
+        border-radius: 8px;
+      "
+    >
+      <span style="color: #888">Total Units: </span>
+      <span id="unit-counter" style="color: #22c55e; font-weight: bold">0</span>
+    </div>
+
+    <form method="POST" action="{% url 'add_courses' %}">
+      {% csrf_token %}
+      
+      <div id="course-rows">
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+          "
+        >
+          <span style="color: #888; font-size: 0.85rem">Course Code</span>
+          <span style="color: #888; font-size: 0.85rem">Unit</span>
+          <span style="color: #888; font-size: 0.85rem">Score</span>
+        </div>
+
+        {% for i in num_range %}
+        <div
+          class="course-row"
+          style="
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+          "
+        >
+          <input
+            type="text"
+            name="course_code_{{ forloop.counter0 }}"
+            class="form-input"
+            placeholder="Course Code e.g. CSC201"
+            style="padding: 0.75rem"
+            required
+          />
+
+          <input
+            type="number"
+            name="credit_unit_{{ forloop.counter0 }}"
+            class="form-input unit-input"
+            placeholder="Unit (1-6)"
+            min="1"
+            max="6"
+            style="padding: 0.75rem"
+            required
+          />
+
+          <input
+            type="number"
+            name="score_{{ forloop.counter0 }}"
+            class="form-input"
+            placeholder="Score (0-100)"
+            min="0"
+            max="100"
+            style="padding: 0.75rem"
+            required
+          />
+        </div>
+        {% endfor %}
+      </div>
+
+      <button
+        type="submit"
+        class="btn-primary"
+        style="
+          width: 100%;
+          margin-top: 1rem;
+          padding: 13px 30px;
+          border-radius: 8px;
+          cursor: pointer;
+        "
+      >
+        Preview Courses →
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Live unit counter
+  function updateCounter() {
+    const inputs = document.querySelectorAll(".unit-input");
+    let total = 0;
+    inputs.forEach((input) => {
+      const val = parseInt(input.value);
+      if (!isNaN(val)) total += val;
+    });
+    document.getElementById("unit-counter").textContent = total;
+  }
+
+  document.addEventListener("input", function (e) {
+    if (e.target.classList.contains("unit-input")) {
+      updateCounter();
+    }
+  });
+
+  // Front-end validation
+  document.querySelector("form").addEventListener("submit", function (e) {
+    const rows = document.querySelectorAll(".course-row");
+    let valid = true;
+
+    rows.forEach((row, i) => {
+      const code = row.querySelector('input[name^="course_code"]').value.trim();
+      const unit = parseInt(
+        row.querySelector('input[name^="credit_unit"]').value,
+      );
+      const score = parseInt(row.querySelector('input[name^="score"]').value);
+
+      if (!code) {
+        alert(`Row ${i + 1}: Course code cannot be empty!`);
+        valid = false;
+      } else if (isNaN(unit) || unit < 1 || unit > 6) {
+        alert(`Row ${i + 1}: Credit unit must be between 1 and 6!`);
+        valid = false;
+      } else if (isNaN(score) || score < 0 || score > 100) {
+        alert(`Row ${i + 1}: Score must be between 0 and 100!`);
+        valid = false;
+      }
+    });
+
+    if (!valid) e.preventDefault();
+  });
+</script>
+{% endblock %}

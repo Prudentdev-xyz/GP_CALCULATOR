@@ -1,0 +1,62 @@
+{% extends 'base.html' %} {% block content %}
+<div class="auth-container">
+  <div class="auth-card">
+    <h2 class="auth-title">Semester Setup</h2>
+    <p class="auth-subtitle">Select your semester details</p>
+
+    {% if messages %} {% for message in messages %}
+    <div class="alert alert-error">{{ message }}</div>
+    {% endfor %} {% endif %}
+
+    <form method="POST" action="{% url 'add_semester' %}">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label class="form-label">Semester</label>
+        <select name="semester_name" class="form-input" required>
+          <option value="">-- Select Semester --</option>
+          <option value="1st Semester">1st Semester</option>
+          <option value="2nd Semester">2nd Semester</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Academic Year</label>
+        <input
+          type="text"
+          name="academic_year"
+          class="form-input"
+          placeholder="e.g. 2024/2025"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Number of Courses</label>
+        <input
+          type="number"
+          name="num_courses"
+          class="form-input"
+          placeholder="e.g. 8"
+          min="1"
+          max="20"
+          required
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="btn-primary"
+        style="
+          width: 100%;
+          margin-top: 1rem;
+          padding: 13px 30px;
+          border-radius: 8px;
+          cursor: pointer;"
+      >
+        Continue →
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}

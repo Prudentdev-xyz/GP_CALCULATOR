@@ -1,0 +1,145 @@
+{% extends 'base.html' %} {% block content %}
+<div class="auth-container">
+  <div class="auth-card" style="max-width: 800px">
+    <div style="text-align: center; margin-bottom: 2rem">
+      <h2 class="auth-title">Results</h2>
+      <p class="auth-subtitle">
+        {{ semester.semester_name }} — {{ semester.academic_year }}
+      </p>
+
+      <div style="margin-top: 1.5rem">
+        <p style="color: #888; font-size: 0.9rem; margin-bottom: 0.25rem">
+          Your GP
+        </p>
+        <p
+          style="color: #22c55e; font-size: 3rem; font-weight: bold; margin: 0"
+        >
+          {{ semester.gp }}
+        </p>
+        <p style="color: #fff; font-size: 1.1rem; margin-top: 0.5rem">
+          {{ semester.degree_class }}
+        </p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table
+        style="
+          width: 100%;
+          min-width: 480px;
+          border-collapse: collapse;
+          margin-bottom: 1.5rem;
+        "
+      >
+        <thead>
+          <tr style="border-bottom: 1px solid #222">
+            <th style="text-align: left; padding: 0.75rem; color: #888">#</th>
+            <th style="text-align: left; padding: 0.75rem; color: #888">
+              Course Code
+            </th>
+            <th style="text-align: left; padding: 0.75rem; color: #888">
+              Credit Unit
+            </th>
+            <th style="text-align: left; padding: 0.75rem; color: #888">
+              Score
+            </th>
+            <th style="text-align: left; padding: 0.75rem; color: #888">
+              Grade
+            </th>
+            <th style="text-align: left; padding: 0.75rem; color: #888">
+              Points
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for course in courses %}
+          <tr style="border-bottom: 1px solid #111">
+            <td style="padding: 0.75rem; color: #888">{{ forloop.counter }}</td>
+            <td style="padding: 0.75rem; color: #fff">
+              {{ course.course_code }}
+            </td>
+            <td style="padding: 0.75rem; color: #fff">
+              {{ course.credit_unit }}
+            </td>
+            <td style="padding: 0.75rem; color: #fff">{{ course.score }}</td>
+            <td style="padding: 0.75rem; color: #22c55e">
+              {{ course.grade_letter }}
+            </td>
+            <td style="padding: 0.75rem; color: #22c55e">
+              {{ course.grade_point }}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div
+      style="
+        padding: 1rem;
+        background: #111;
+        border: 1px solid #222;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+      "
+    >
+      <p style="margin: 0.25rem 0">
+        <span style="color: #888">Total Units:</span>
+        <span style="color: #fff; font-weight: bold"
+          >{{ semester.total_units }}</span
+        >
+      </p>
+      <p style="margin: 0.25rem 0">
+        <span style="color: #888">Total Grade Points:</span>
+        <span style="color: #fff; font-weight: bold"
+          >{{ semester.total_grade_points }}</span
+        >
+      </p>
+      <p style="margin: 0.25rem 0">
+        <span style="color: #888">GP:</span>
+        <span style="color: #22c55e; font-weight: bold; font-size: 1.2rem"
+          >{{ semester.gp }}</span
+        >
+      </p>
+      <p style="margin: 0.25rem 0">
+        <span style="color: #888">Class of Degree:</span>
+        <span style="color: #22c55e; font-weight: bold"
+          >{{ semester.degree_class }}</span
+        >
+      </p>
+    </div>
+
+    <div style="display: flex; gap: 1rem">
+      <a
+        href="{% url 'dashboard' %}"
+        style="
+          flex: 1;
+          text-align: center;
+          padding: 0.75rem;
+          border: 1px solid #fff;
+          border-radius: 8px;
+          color: #fff;
+          text-decoration: none;
+        "
+      >
+        ← Dashboard
+      </a>
+      <a
+        href="{% url 'download_pdf' semester.id %}"
+        style="
+          flex: 1;
+          text-align: center;
+          padding: 0.75rem;
+          background: #22c55e;
+          border-radius: 8px;
+          color: #000;
+          font-weight: bold;
+          text-decoration: none;
+        "
+      >
+        Download PDF ⬇
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

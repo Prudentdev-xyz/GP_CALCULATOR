@@ -1,0 +1,96 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Dashboard — GP
+Calculator{% endblock %} {% block content %}
+<div class="dashboard-container">
+  <!-- Top Navbar -->
+  <nav class="dash-nav">
+    <a href="{% url 'landing' %}" class="navbar-brand">GP CALC</a>
+    <div class="dash-nav-right">
+      <span class="dash-welcome">{{ request.user.last_name }}</span>
+      <a href="{% url 'logout' %}" class="btn btn-outline">Logout</a>
+    </div>
+  </nav>
+
+  <!-- Welcome Banner -->
+  <div class="dash-banner">
+    <div>
+      <p class="dash-label">STUDENT PORTAL</p>
+      <h1 class="dash-title">
+        Welcome, <span>{{ request.user.last_name }}</span> 👋
+      </h1>
+      <p class="dash-subtitle">
+        {{ profile.department }} &mdash; {{ profile.programme }} &mdash; {{ profile.level }} Level
+      </p>
+    </div>
+    <div class="dash-matric">
+      <span class="stat-label">Matric Number</span>
+      <span class="stat-number">{{ profile.matric_number }}</span>
+    </div>
+  </div>
+
+  <!-- Info Cards -->
+  <div class="dash-cards">
+    <div class="dash-card">
+      <span class="dash-card-label">Full Name</span>
+      <span class="dash-card-value">{{ request.user.get_full_name }}</span>
+    </div>
+    <div class="dash-card">
+      <span class="dash-card-label">Department</span>
+      <span class="dash-card-value">{{ profile.department }}</span>
+    </div>
+    <div class="dash-card">
+      <span class="dash-card-label">Level</span>
+      <span class="dash-card-value">{{ profile.level }} Level</span>
+    </div>
+    <div class="dash-card">
+      <span class="dash-card-label">Programme</span>
+      <span class="dash-card-value">{{ profile.programme }}</span>
+    </div>
+  </div>
+
+  <!-- Semester Section -->
+  <div class="dash-section">
+    <div class="dash-section-header">
+      {% comment %}
+      <p class="section-title">Your Semester</p>
+      {% endcomment %} {% comment %} {% if not semesters %}
+      <a href="{% url 'add_semester' %}" class="btn btn-primary">
+        + Add Semester
+      </a>
+      {% endif %} {% endcomment %}
+    </div>
+
+    {% if semesters %}
+    <div class="semester-list">
+      {% for semester in semesters %}
+      <div class="semester-card">
+        <div>
+          <span class="semester-name">{{ semester.semester_name }}</span>
+          <span class="semester-year">{{ semester.academic_year }}</span>
+        </div>
+        <div class="semester-right">
+          <span class="semester-gp">GP: {{ semester.gp }}</span>
+          <span class="semester-class">{{ semester.degree_class }}</span>
+          <a
+            href="{% url 'result' semester.id %}"
+            class="btn btn-outline btn-sm"
+          >
+            View Result
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% else %}
+    <div class="empty-state">
+      <span class="empty-icon">🎓</span>
+      <h3>No semester yet</h3>
+      <p>Click "Get Started" to calculate your GP</p>
+      <a href="{% url 'add_semester' %}" class="btn btn-primary">
+        Get Started
+      </a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'base.html' %} {% load static %} {% block title %}GP Calculator —
+Home{% endblock %} {% block content %}
+<div class="landing-container">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="{% url 'landing' %}" class="navbar-brand">GP CALC</a>
+    <div class="navbar-links">
+      <a href="{% url 'login' %}" class="btn btn-outline">Login</a>
+      <a href="{% url 'signup' %}" class="btn btn-primary">Sign Up</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-text">
+      <h1 class="hero-title">
+        Know Your <span>Grade Point</span> Before Results Drop.
+      </h1>
+      <p class="hero-subtitle">
+        Enter your courses, scores and units. Get your GP, Class of Degree and a
+        downloadable PDF all in one place.
+      </p>
+      <div class="hero-buttons">
+        <a href="{% url 'signup' %}" class="btn btn-primary">Get Started</a>
+        <a href="{% url 'login' %}" class="btn btn-outline"
+          >I Have an Account</a
+        >
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-card">
+        <span class="stat-number">5.0</span>
+        <span class="stat-label">Maximum GP</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">100%</span>
+        <span class="stat-label">Accurate</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">PDF</span>
+        <span class="stat-label">Export Ready</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider" />
+
+  <!-- Features -->
+  <p class="section-title">What You Get</p>
+  <div class="features">
+    <div class="feature-card">
+      <span class="feature-icon"></span>
+      <h3>Dynamic Course Entry</h3>
+      <p>
+        Add as many courses as you offer. Enter the code, unit and score for
+        each one.
+      </p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon"></span>
+      <h3>Instant GP Result</h3>
+      <p>
+        Your Grade Point and Class of Degree calculated immediately using the
+        Nigerian 5-point scale.
+      </p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon"></span>
+      <h3>PDF Download</h3>
+      <p>
+        Export your semester result as a clean, professional PDF you can save or
+        print.
+      </p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">Built by AbdQoharr</div>
+</div>
+{% endblock %}
