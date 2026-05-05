@@ -1,1 +1,2 @@
-web: gunicorn gp_calculator.wsgi
+
+
