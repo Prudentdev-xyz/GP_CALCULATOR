@@ -1,1 +1,1 @@
-web: gunicon gp_calculator.wsgi
+web: gunicorn gp_calculator.wsgi
