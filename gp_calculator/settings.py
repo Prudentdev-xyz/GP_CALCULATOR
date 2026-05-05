@@ -132,3 +132,6 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 
 LOGIN_URL = '/auth/login/'
 LOGIN_REDIRECT_URL = '/auth/dashboard/'
+
+import os
+ALLOWED_HOSTS = ['*']

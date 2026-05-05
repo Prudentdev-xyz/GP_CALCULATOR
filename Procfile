@@ -1,0 +1,1 @@
+web: gunicon gp_calculator.wsgi
